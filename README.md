@@ -44,7 +44,7 @@ like. You can use this pull request to disucss something code specific, or if yo
 your code.
 
 If you have any problems or questions, just open an issue in your repository, someone will get back to you
-about it. (If it's something quick, you can use [this HipChat channel](http://www.hipchat.com/gP8zhqbmd)
+about it. (If it's something quick, you can use [this HipChat channel](http://www.hipchat.com/gP8zhqbmd) )
 
 Once you have something more substatial to show, make sure you have a pull request open so that a code review
 can be performed within it.
