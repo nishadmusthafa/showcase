@@ -1,0 +1,9 @@
+{
+    "element": "api_key",
+    "display": "API KEY",
+    "help_text": "API Key of your HelpScout account",
+    "source": "Input",
+    "field_type": "Input",
+    "store": true,
+    "mandatory": true
+}

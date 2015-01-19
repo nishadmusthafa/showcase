@@ -1,0 +1,9 @@
+{
+    "element": "email",
+    "display": "Email",
+    "help_text": "Email associate with your HelpScout account",
+    "source": "Input",
+    "field_type": "Input",
+    "store": true,
+    "mandatory": true
+}

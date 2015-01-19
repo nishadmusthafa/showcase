@@ -1,0 +1,170 @@
+<div class="row">
+<form class="form-horizontal" id="create_integration_form">
+  {% csrf_token %}
+  <div class="form-group form-group-sm">
+    <label for="name" class="col-sm-2 control-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="name" placeholder="Name" >
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+    <label for="display_name" class="col-sm-2 control-label">Display Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="display_name" placeholder="Display Name">
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="description" class="col-sm-2 control-label">Description</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" rows="3" id="description" placeholder="Description"></textarea>
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+    <label for="logo_url" class="col-sm-2 control-label">Logo URL</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="logo_url" placeholder="Logo URL">
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+    <label for="icon_url" class="col-sm-2 control-label">Icon URL</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="icon_url" placeholder="Icon URL">
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+  <label for="authentication_type" class="col-sm-2 control-label">Auth Type</label>
+    <div class="col-sm-4">
+        <select class="form-control" id="authentication_type">
+          <option value="none">None</option>
+          <option value="custom">Custom</option>
+          <option value="oauth2">OAuth2</option>
+        </select>
+        <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+    <label for="auth_fields" class="col-sm-2 control-label">Auth Fields</label>
+    <div class="col-sm-4">
+        <button class="btn btn-primary btn-sm" type="button" id="add_auth_field">Add Auth Field</button>
+        <div class="row">
+        <ul style="list-style: none;" id="auth_field_list">
+        </ul>
+        </div>
+        <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+    <label for="auth_validation_endpoint" class="col-sm-2 control-label">Auth Validation URL</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="auth_validation_endpoint" placeholder="Auth Validation URL">
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+    <label for="contact_synchronisation_endpoint" class="col-sm-2 control-label">Contact Sync URL</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="contact_synchronisation_endpoint" placeholder="Contact Sync URL">
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+    <label for="interaction_retrieval_endpoint" class="col-sm-2 control-label">Interaction Retrieval URL</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="interaction_retrieval_endpoint" placeholder="Interaction Retrieval URL">
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default" id="create_integration">Create Integration</button>
+    </div>
+  </div>
+</form>
+</div>
+
+<div class="modal" id="auth_field_modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Auth Field</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="auth_field_form">
+              <div class="form-group form-group-sm">
+                <label for="element" class="col-sm-2 control-label">Element</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="element" placeholder="Element">
+                  <span class="help-block" ></span>
+                </div>
+              </div>
+              <div class="form-group form-group-sm">
+                   <label for="source" class="col-sm-2 control-label">Source</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="source">
+                          <option value="input">Input</option>
+                          <option value="default">Default</option>
+                          <option value="auth_validation">Auth Validation</option>
+                        </select>
+                    </div>
+              </div>
+              <div class="form-group form-group-sm">
+                   <label for="field_type" class="col-sm-2 control-label">Field Type</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="field_type">
+                          <option value="input">Input</option>
+                          <option value="oauth">OAuth</option>
+                        </select>
+                    </div>
+              </div>
+              <div class="form-group form-group-sm">
+                <label for="display" class="col-sm-2 control-label">Display</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="display" placeholder="Display">
+                  <span class="help-block" ></span>
+                </div>
+              </div>
+              <div class="form-group form-group-sm">
+                <label for="help_text" class="col-sm-2 control-label">Help Text</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="help_text" placeholder="Help Text">
+                </div>
+              </div>
+              <div class="form-group form-group-sm">
+                <label for="field_format" class="col-sm-2 control-label">Field Format</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="field_format" placeholder="Field Format">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input id="mandatory" type="checkbox"> Mandatory
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input id="store" type="checkbox"> Store(by Talkdesk)
+                    </label>
+                  </div>
+                </div>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="auth_field_save_cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" id="auth_field_form_submit" class="btn btn-primary">Save Auth Field</button>
+      </div>
+    </div>
+  </div>
+</div>

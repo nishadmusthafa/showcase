@@ -1,0 +1,9 @@
+{
+    "element": "account_name",
+    "display": "Account",
+    "help_text": "HelpScout Account Name",
+    "source": "Input",
+    "field_type": "Input",
+    "store": false,
+    "mandatory": true
+}

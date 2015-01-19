@@ -1,0 +1,8 @@
+{
+    "element": "account",
+    "display": "Account",
+    "source": "Input",
+    "field_type": "Input",
+    "store": true,
+    "mandatory": true
+}
