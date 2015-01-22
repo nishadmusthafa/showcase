@@ -47,5 +47,5 @@ The app is live on [https://talkdesk-integrator.herokuapp.com][2]
 
 Here is the set of sub tasks this project has been divided into. Progress is being tracked here
 - [x] UI to add Integration Configuration
-- [ ] Link to the Json need to be given to TalkDesk for adding Integration
+- [x] Link to the Json need to be given to TalkDesk for adding Integration
 - [ ] UI to add Actions
