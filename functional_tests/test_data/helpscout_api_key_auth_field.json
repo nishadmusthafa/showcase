@@ -1,0 +1,9 @@
+{
+    "element": "api_key",
+    "display": "API KEY",
+    "help_text": "API Key of your HelpScout account. Find under Manage > Users > {Your user} > API Keys",
+    "source": "Input",
+    "field_type": "Input",
+    "store": false,
+    "mandatory": true
+}

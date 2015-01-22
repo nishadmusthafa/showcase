@@ -1,11 +1,11 @@
 {
-    "name": "helpscout",
+    "name": "help scout",
     "display_name": "HelpScout",
     "logo_url": "non_url",
     "icon_url": "non_url",
     "description": "Great Integration to connect TalkDesk and HelpScout",
-    "auth_type": "None",
+    "authentication_type": "None",
     "auth_validation_endpoint": "non_url",
-    "contact_synchronisation_endpoint": "non_url",
+    "contact_synchronization_endpoint": "non_url",
     "interaction_retrieval_endpoint": "non_url"
 }

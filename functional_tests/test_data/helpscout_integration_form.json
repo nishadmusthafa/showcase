@@ -1,0 +1,11 @@
+{
+    "name": "helpscout",
+    "display_name": "Help Scout",
+    "logo_url": "https://dl.dropboxusercontent.com/u/91039029/helpscout/HelpScout_logo_large.png",
+    "icon_url": "https://dl.dropboxusercontent.com/u/91039029/helpscout/HelpScout_icon_large.png",
+    "description": "A great integration to help you view your HelpScout ticket information right on your TalkDesk Call Screen.",
+    "authentication_type": "Custom",
+    "auth_validation_endpoint": "https://talkdesk-integrator.herokuapp.com/helpscout/auth_validation",
+    "contact_synchronization_endpoint": "https://talkdesk-integrator.herokuapp.com/helpscout/contact_sync",
+    "interaction_retrieval_endpoint": "https://talkdesk-integrator.herokuapp.com/helpscout/interaction_update"
+}

@@ -1,4 +1,10 @@
-load_index_page();
+if (typeof String.prototype.startsWith != 'function') {
+  String.prototype.startsWith = function (str){
+    return this.slice(0, str.length) == str;
+  };
+}
+
+load_by_hash();
 
 var auth_fields;
 var under_edit_auth_field = null;
@@ -12,17 +18,134 @@ function start_loading(){
         </div>')
 };
 
-function load_index_page(notify, notification_type, notification_message){
+function coming_soon(){
+    $("#main_container").html('<div class="row"> \
+        <div class="col-md-offset-3"> \
+            <h1>Coming soon..  to a monitor near you!!</h1> \
+        </div> \
+        </div>')
+};
+
+
+function load_by_hash(){
+    if (location.hash.length == 0)
+    {
+        load_index_page();
+        return
+    }
+
+    if (location.hash.startsWith('#index'))
+    {
+        load_index_page(location.hash);
+        return
+    }
+    if (location.hash == '#create_integration')
+    {
+        load_integration_form();
+        return;
+        }
+    if (location.hash.startsWith('#integration_detail'))
+    {
+        id = location.hash.split('-')[1];
+        load_integration_detail(id);
+        return;
+    }
+    if (location.hash.startsWith('#add_action'))
+    {
+        id = location.hash.split('-')[1];
+        add_action(id);
+        return;
+    }
+    if (location.hash.startsWith('#agent_sync'))
+    {
+        id = location.hash.split('-')[1];
+        agent_sync(id);
+        return;
+    }
+    if (location.hash.startsWith('#auth_validation'))
+    {
+        id = location.hash.split('-')[1];
+        auth_validation(id);
+        return;
+    }
+    if (location.hash.startsWith('#contact_sync'))
+    {
+        id = location.hash.split('-')[1];
+        contact_sync(id);
+        return;
+    }
+    if (location.hash.startsWith('#interaction_retrieval'))
+    {
+        id = location.hash.split('-')[1];
+        interaction_retrieval(id);
+        return;
+    }
+}
+
+function load_index_page(hash){
     $.ajax({
         url:"integration/",
         success:function(result){
             $("#main_container").html(result);
             $("#add_integration").click(create_integration_form);
-            window.location.hash = 'index';
-            if (notify == true && !(notification_type == undefined) && !(notification_message == undefined)) {
-                notify_transaction(notification_type, notification_message);
+            $(".integration_detail").click(function() {
+                window.location.hash = '#integration_detail-' + $(this).attr('id');
+            });
+            if (hash != undefined && hash.split("-").length > 1) {
+                switch(hash.split("-")[1])
+                {
+                    case 'success_int' :notification_type = "info"; 
+                                        notification_message = "Integration created successfully"; 
+                                        notify_transaction(notification_type, notification_message);
+                                        break;
+                    }
             }
+
     }});
+};
+
+function add_action(id){
+    coming_soon();
+};
+
+function agent_sync(id){
+    coming_soon();
+};
+
+function auth_validation(id){
+    coming_soon();
+};
+
+function contact_sync(id){
+    coming_soon();
+};
+
+function interaction_retrieval(id){
+    coming_soon();
+};
+
+function load_integration_detail(id){
+    $.ajax({
+        url:"integration/"+id,
+        success:function(result){
+            $("#main_container").html(result);
+                $(".add_action").click(function() {
+                    window.location.hash = '#add_action-' + $(this).attr('id');
+                });
+                $(".agent_sync").click(function() {
+                    window.location.hash = '#agent_sync-' + $(this).attr('id');
+                });
+                $(".auth_validation").click(function() {
+                    window.location.hash = '#auth_validation-' + $(this).attr('id');
+                });
+                $(".contact_sync").click(function() {
+                    window.location.hash = '#contact_sync-' + $(this).attr('id');
+                });
+                $(".interaction_retrieval").click(function() {
+                    window.location.hash = '#interaction_retrieval-' + $(this).attr('id');
+                });
+            
+     }});
 };
 
 function notify_transaction(message_type, message){
@@ -33,22 +156,20 @@ function notify_transaction(message_type, message){
         </button>'+ message +'</div>');
 }
 
-window.onhashchange = function() {
-    if (location.hash.length == 0)
-    {
-        start_loading();
-        load_index_page();
-    }
+window.onhashchange = function(event) {
+    if (event.newURL == event.oldURL)
+        return
+    start_loading();
+    load_by_hash();
 };
 
-function create_integration_form(){
-    start_loading();
+function load_integration_form()
+{
     auth_fields = {};
     $.ajax({
-        url:"integration/create/form/",
+        url:"integration_create/form/",
         success:function(result){
             $("#main_container").html(result);
-            window.location.hash = "create_integration";
             $("#add_auth_field").click(add_auth_field_form);
             $("#auth_field_form_submit").click(save_auth_field);
             $(".help-block").hide();
@@ -57,6 +178,10 @@ function create_integration_form(){
                     create_integration();
                 });
     }});
+}
+
+function create_integration_form(){
+    window.location.hash = "create_integration";
 };
 
 
@@ -70,14 +195,13 @@ function create_integration(){
                     'authentication_type': $("#authentication_type").val(),
                     'auth_field_list': auth_fields,
                     'auth_validation_endpoint': $("#auth_validation_endpoint").val(),
-                    'contact_synchronisation_endpoint': $("#auth_validation_endpoint").val(),
+                    'contact_synchronization_endpoint': $("#auth_validation_endpoint").val(),
                     'interaction_retrieval_endpoint': $("#auth_validation_endpoint").val(),
                 }
     $.ajax({
-        url:"integration/create/",
+        url:"integration_create/",
         success:function(){
-            start_loading();
-            load_index_page(true, 'info' , "Integration created successfully")
+            window.location.hash = "index-success_int";
         },
         headers: { "X-CSRFToken": $.cookie('csrftoken')},
         type: 'POST',

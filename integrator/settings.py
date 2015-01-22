@@ -9,9 +9,9 @@ DEFAULT_SECRET_KEY = '3iy-!-d$!pc_ll$#$elg&cpr@*tfn-d5&n9ag=)%#()t$$5%5^'
 SECRET_KEY = os.environ.get('SECRET_KEY', DEFAULT_SECRET_KEY)
 
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', "False") == "True"
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = os.environ.get('DEBUG', "False") == "True"
 
 ALLOWED_HOSTS = []
 
@@ -53,8 +53,8 @@ DATABASES = {
 }
 
 SESSION_ENGINE = 'mongoengine.django.sessions'
-MONGODB_DATABASE_HOST = os.environ.get('MONGOLAB_URI')
-MONGODB_NAME = os.environ.get('MONGOLAB_DB_NAME')
+MONGODB_DATABASE_HOST = os.environ.get('MONGO_URI')
+MONGODB_NAME = os.environ.get('MONGO_DB_NAME')
 
 mongoengine.connect(MONGODB_NAME, host=MONGODB_DATABASE_HOST)
 

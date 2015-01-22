@@ -3,10 +3,13 @@
 This is a UI built to achieve
 
 * Easier configuration of a talkdesk integration
-* Hosted support for the webhooks required by integrations
+* This can be thought of as a reusable "bridge" as described [here][1]
 
+[1]:https://github.com/Talkdesk/api/tree/master/integrations
 
 ### Running Locally
+
+Please add an environment variable DEBUG and set its value to "True". Then use the following commands. 
 
 ```
 git clone https://github.com/iHacketh/tech_challenge.git
@@ -25,15 +28,20 @@ python manage.py test functional_tests
 
 ### Deployment
 
-The app is already heroku ready. All you need to do is make sure you are on master and follow the commands below
+The app is already heroku ready.  You will need to add two Config Vars to your heroku app  
+```
+MONGO_DB_NAME - Your mongo db name
+MONGO_URI - mongodb://{user}:{pwd}@{host}:{port}/MONGO_DB_NAME
+```
+Make sure you are on master branch and execute the following commands.
 
 ```
 heroku create
 git push heroku master
 ```
-The app is live on [https://talkdesk-integrator.herokuapp.com][1] 
+The app is live on [https://talkdesk-integrator.herokuapp.com][2] 
 
-[1]:https://talkdesk-integrator.herokuapp.com
+[2]:https://talkdesk-integrator.herokuapp.com
 
 ### Progress
 

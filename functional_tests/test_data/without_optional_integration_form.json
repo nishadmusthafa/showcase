@@ -4,5 +4,5 @@
     "logo_url": "http://logo.com/helpscout",
     "icon_url": "http://icon.com/helpscout",
     "description": "Great Integration to connect TalkDesk and HelpScout",
-    "auth_type": "None"
+    "authentication_type": "None"
 }

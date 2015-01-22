@@ -1,2 +1,0 @@
-from ui_tests.integration_form_tests import IntegrationFormTest
-

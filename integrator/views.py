@@ -1,6 +1,7 @@
-from django.http import HttpResponse
+from django.core import serializers
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
-from helper import validate_integration_form_data
+from helper import validate_integration_form_data, serialize_integration
 import json
 from models import AuthenticationField, Integration
 from mongoengine.errors import NotUniqueError
@@ -9,7 +10,26 @@ def index(request):
     return render(request, 'index.html')
 
 def get_integrations(request):
-    return render(request, 'integrations.html')
+    integrations = Integration.objects.all()
+    context = {'integrations': integrations}
+    return render(request, 'integrations.html', context)
+
+def get_integration_detail(request, integration_id):
+    try:
+        integration = Integration.objects.get(name=integration_id)
+    except Integration.DoesNotExist:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+    context = {'integration': integration}
+    return render(request, 'integration.html', context)
+
+def get_integration_json(request, integration_id):
+    try:
+        integration = Integration.objects.get(name=integration_id)
+    except Integration.DoesNotExist:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
+    integration = serialize_integration(integration)
+    return HttpResponse(status=200, content=json.dumps(integration), content_type="application/json")
 
 
 def create_integration_form(request):
@@ -47,4 +67,4 @@ def create_integration(request):
         return HttpResponse(content=json.dumps(errors), content_type="application/json", status=400)
 
     #Need to do this to honor the json response that is expected by the ajax client
-    return HttpResponse(status=200, content=json.dumps({}), content_type="application/json",)
+    return HttpResponse(status=200, content=json.dumps({}), content_type="application/json")

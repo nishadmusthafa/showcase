@@ -1,17 +1,17 @@
 <div class="row" id="notification_window">
 </div>
 
-<div class="row">
-<button class="btn btn-primary" id="add_integration">Add an Integration</button>
-</div>
-<div class="row">
-<h3> Existing Integrations </h3>
-</div>
-<div class="row">
 
-<ul class="list-group col-md-4">
+<button class="btn btn-primary" id="add_integration">Add an Integration</button>
+
+
+<h3> Existing Integrations </h3>
+
+<div class="row col-md-4">
+
+<ul class="list-group">
 {% for integration in integrations %}
-  <li class="list-group-item"><a href="/integration/{{integration.name}}">{{integration.display_name}}</a></li>
+  <li class="list-group-item"><a style="cursor: pointer;" class="integration_detail" id="{{integration.name}}">{{integration.display_name}}</a></li>
 {% endfor %}
 </ul>
 </div>

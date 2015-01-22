@@ -1,9 +1,6 @@
 from functional_tests.test_utils.helper import UITestCase
 from integrator.models import Integration
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 import json
 import mock
 from mongoengine.errors import NotUniqueError
@@ -35,7 +32,7 @@ class IntegrationFormTest(UITestCase):
         self.key_in_input("description", integration_form_data.get("description", ""))
         self.make_selection("authentication_type", integration_form_data.get("authentication_type", "None"))
         self.key_in_input("auth_validation_endpoint", integration_form_data.get("auth_validation_endpoint", ""))
-        self.key_in_input("contact_synchronisation_endpoint", integration_form_data.get("contact_synchronisation_endpoint", ""))
+        self.key_in_input("contact_synchronization_endpoint", integration_form_data.get("contact_synchronization_endpoint", ""))
         self.key_in_input("interaction_retrieval_endpoint", integration_form_data.get("interaction_retrieval_endpoint", ""))
 
 
@@ -60,13 +57,7 @@ class IntegrationFormTest(UITestCase):
 
     def reach_add_integration_page(self):
         self.browser.get(self.live_server_url + '/')
-
-        try:
-            wait = WebDriverWait(self.browser, 10)
-            wait.until(EC.element_to_be_clickable((By.ID,'add_integration')))
-        finally:
-            pass
-        
+        self.wait_till_element_is_clickable('add_integration')
         add_integration = self.browser.find_element_by_id('add_integration')
         add_integration.click()
 
@@ -134,12 +125,15 @@ class IntegrationFormTest(UITestCase):
         for form_group in form_groups:
             self.assertNotIn('has-error', form_group.get_attribute('class'))
 
-    def mock_integration_save_with_non_unique_error(self):
-        from integrator.models import Integration
-        from mock import MagicMock
-        from mongoengine.errors import NotUniqueError
-        integration = Integration()
-        integration.save = MagicMock(side_effect=NotUniqueError)
+    def assert_proper_form_structure(self):
+        add_integration_form = self.browser.find_element_by_id('create_integration_form')
+        number_of_form_elements = len(add_integration_form.find_elements_by_css_selector(".form-group"))
+        self.assertEquals(11, number_of_form_elements)
+
+    def test_form_structure(self):
+        self.reach_add_integration_page()
+        self.assert_proper_form_structure()
+        
 
     def test_if_auth_fields_are_added_alphabetically(self):
         self.reach_add_integration_page()
@@ -264,13 +258,15 @@ class IntegrationFormTest(UITestCase):
     def test_wrong_data_type_submission(self):
         self.reach_add_integration_page()
         self.json_to_integration_form(self.test_data_directory + 'wrong_data_integration_form.json')
+
         self.browser.find_element_by_id("create_integration").click()
 
         self.assert_url_validation_error_for_field('logo_url')
         self.assert_url_validation_error_for_field('icon_url')
         self.assert_url_validation_error_for_field('auth_validation_endpoint')
-        self.assert_url_validation_error_for_field('contact_synchronisation_endpoint')
+        self.assert_url_validation_error_for_field('contact_synchronization_endpoint')
         self.assert_url_validation_error_for_field('interaction_retrieval_endpoint')
+        self.assert_form_error_for_field('name', 'Please use characters A-Z, a-z, 0-9 or _ to create a name')
 
     def test_if_optional_parameters_do_not_give_error_when_not_entered(self):
         self.reach_add_integration_page()
@@ -278,9 +274,8 @@ class IntegrationFormTest(UITestCase):
         
         with mock.patch.object(Integration, 'save', side_effect=None):
             self.browser.find_element_by_id("create_integration").click()
-
-        alert = self.browser.find_element_by_id("notification_window")
-        self.assertIn("Integration created successfully", alert.text)
+            alert = self.browser.find_element_by_id("notification_window")
+            self.assertIn("Integration created successfully", alert.text)
 
     def test_submission_of_duplicate_name(self):
         self.reach_add_integration_page()
@@ -290,4 +285,20 @@ class IntegrationFormTest(UITestCase):
             self.browser.find_element_by_id("create_integration").click()
 
         self.assert_form_error_for_field('name', 'Integration with name helpscout already exists')
+
+    def test_navigation_create_integration_to_index_page(self):
+        self.reach_add_integration_page()
+        self.json_to_integration_form(self.test_data_directory + 'without_optional_integration_form.json')
+        
+        with mock.patch.object(Integration, 'save', side_effect=None):
+            self.browser.find_element_by_id("create_integration").click()
+
+        self.browser.back()
+        self.assert_proper_form_structure()
+
+    def test_load_of_page_by_hash(self):
+        self.browser.get(self.live_server_url + '/#create_integration')
+        self.assert_proper_form_structure()
+
+
 
