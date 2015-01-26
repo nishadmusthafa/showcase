@@ -43,6 +43,12 @@ The app is live on [https://talkdesk-integrator.herokuapp.com][2]
 
 [2]:https://talkdesk-integrator.herokuapp.com
 
+### Using the UI
+
+Feel free to read through the [wiki][3] to learn how to add an integration through the Integrator UI
+
+[3]:https://github.com/iHacketh/tech_challenge/wiki/Talk-Desk-Integrator-UI
+
 ### Progress
 
 Here is the set of sub tasks this project has been divided into. Progress is being tracked here
