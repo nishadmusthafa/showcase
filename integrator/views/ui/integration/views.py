@@ -1,13 +1,11 @@
-from django.core import serializers
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
-from helper import validate_integration_form_data, serialize_integration
+from integrator.helper import serialize_integration
+from integrator.models import AuthenticationField, Integration
+from integrator.validate import validate_integration_form_data
 import json
-from models import AuthenticationField, Integration
 from mongoengine.errors import NotUniqueError
 
-def index(request):
-    return render(request, 'index.html')
 
 def get_integrations(request):
     integrations = Integration.objects.all()
@@ -21,16 +19,6 @@ def get_integration_detail(request, integration_id):
         return HttpResponseNotFound('<h1>Page not found</h1>')
     context = {'integration': integration}
     return render(request, 'integration.html', context)
-
-def get_integration_json(request, integration_id):
-    try:
-        integration = Integration.objects.get(name=integration_id)
-    except Integration.DoesNotExist:
-        return HttpResponseNotFound('<h1>Page not found</h1>')
-
-    integration = serialize_integration(integration)
-    return HttpResponse(status=200, content=json.dumps(integration), content_type="application/json")
-
 
 def create_integration_form(request):
     return render(request, 'create_integration_form.html')

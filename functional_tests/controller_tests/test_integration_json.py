@@ -18,11 +18,11 @@ class IntegrationJSONTest(TestCase):
         integration = Integration(**integration_data)
         auth_conf = AuthenticationField(**auth_field_data)
         integration.authentication_configuration.append(auth_conf)
-        with mock.patch('integrator.views.Integration') as integration_mock:
+        with mock.patch('integrator.views.configuration_json.views.Integration') as integration_mock:
             integration_mock.objects.get = mock.Mock()
             conf = {'return_value': integration}
             integration_mock.objects.get.configure_mock(**conf)
-            response = self.client.get('/integration/helpscout/json/')
+            response = self.client.get('/integration/helpscout/json/', SERVER_NAME="talkdesk-integrator.com")
 
         response = json.loads(response.content)
 
@@ -42,6 +42,13 @@ class IntegrationJSONTest(TestCase):
 
         for key in integration_data.keys():
             self.assertEquals(response[key], integration_data[key])
+
+        self.assertEquals(response["contact_synchronization_endpoint"],
+                          "http://talkdesk-integrator.com/integrations/helpscout/contact_sync")
+        self.assertEquals(response["auth_validation_endpoint"],
+                          "http://talkdesk-integrator.com/integrations/helpscout/auth_validation")
+        self.assertEquals(response["interaction_retrieval_endpoint"],
+                          "http://talkdesk-integrator.com/integrations/helpscout/interaction_retrieval")
 
 
 

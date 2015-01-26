@@ -1,0 +1,17 @@
+<div class="row" id="notification_window">
+</div>
+
+
+<button class="btn btn-primary" id="add_action">Add an Action</button>
+
+
+<h3> Existing Actions </h3>
+
+<div class="row col-md-4">
+
+<ul class="list-group">
+{% for action in actions %}
+  <li class="list-group-item"><a style="cursor: pointer;" class="action_detail" id="{{action.name}}">{{action.display}}</a></li>
+{% endfor %}
+</ul>
+</div>

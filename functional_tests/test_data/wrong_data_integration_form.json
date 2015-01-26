@@ -4,8 +4,5 @@
     "logo_url": "non_url",
     "icon_url": "non_url",
     "description": "Great Integration to connect TalkDesk and HelpScout",
-    "authentication_type": "None",
-    "auth_validation_endpoint": "non_url",
-    "contact_synchronization_endpoint": "non_url",
-    "interaction_retrieval_endpoint": "non_url"
+    "authentication_type": "None"
 }

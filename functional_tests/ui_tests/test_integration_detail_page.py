@@ -10,7 +10,7 @@ class IntegrationDetailPageTest(UITestCase):
         integration_data = json.loads(open(self.test_data_directory + integration_data_file).read())
         integration = Integration(**integration_data)
 
-        with mock.patch('integrator.views.Integration') as integration_mock:
+        with mock.patch('integrator.views.ui.integration.views.Integration') as integration_mock:
             integration_mock.objects.all = mock.Mock()
             integration_mock.objects.get = mock.Mock()
             conf = {'return_value': [integration]}
@@ -30,8 +30,8 @@ class IntegrationDetailPageTest(UITestCase):
         integration_list_element = self.browser.find_element_by_id('json_helpscout')
         self.assertIn('integration_json', integration_list_element.get_attribute('class'))
 
-        integration_list_element = self.browser.find_element_by_id('add_action_helpscout')
-        self.assertIn('add_action', integration_list_element.get_attribute('class'))
+        integration_list_element = self.browser.find_element_by_id('actions_helpscout')
+        self.assertIn('actions', integration_list_element.get_attribute('class'))
 
         integration_list_element = self.browser.find_element_by_id('agent_sync_helpscout')
         self.assertIn('agent_sync', integration_list_element.get_attribute('class'))
@@ -51,7 +51,7 @@ class IntegrationDetailPageTest(UITestCase):
         self.browser.back()
         add_integration = self.browser.find_element_by_id('add_integration')
 
-    # def test_navigation_integration_detail_to_add_actions(self):
+    # def test_navigation_integration_detail_to_actions(self):
     #     pass
 
 

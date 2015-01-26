@@ -1,0 +1,9 @@
+{
+    "name": "%character",
+    "display": "",
+    "description": "",
+    "http_url": "non_url",
+    "basic_auth": "not_seperated_by_colon",
+    "http_request_params": "not json",
+    "success_response": "not_number"
+}

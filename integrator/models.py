@@ -36,9 +36,6 @@ class Integration(Document):
     icon_url = URLField(required=True)
     authentication_type = StringField(choices=AUTH_CHOICES)
     authentication_configuration = ListField(EmbeddedDocumentField(AuthenticationField))
-    auth_validation_endpoint = URLField()
-    contact_synchronization_endpoint = URLField()
-    interaction_retrieval_endpoint = URLField()
     interaction_types = ListField(StringField())
 
     meta = {
@@ -46,3 +43,16 @@ class Integration(Document):
             'name'
         ]
     }
+
+class ActionInputParam(EmbeddedDocument):
+    key = StringField(max_length=20, required=True)
+    name = StringField(max_length=20, required=True)
+    mandatory = BooleanField(required=True)
+
+class Action(Document):
+    name = StringField(max_length=20, unique_with=['provider'])
+    provider = StringField(max_length=20, required=True)
+    display = StringField(max_length=20, required=True)
+    description = StringField(max_length=200, required=True)
+    inputs = ListField(EmbeddedDocumentField(ActionInputParam))
+    external_request = DictField(required=True)

@@ -37,7 +37,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'integrator.urls'
+ROOT_URLCONF = 'integrator.views.urls'
 
 WSGI_APPLICATION = 'integrator.wsgi.application'
 
@@ -93,6 +93,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),

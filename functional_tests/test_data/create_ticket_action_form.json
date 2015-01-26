@@ -1,0 +1,6 @@
+{
+    "name": "create_ticket",
+    "display": "Create Ticket",
+    "description": "Create a ticket when a customer calls about an issue",
+    "provider": "helpscout"
+}

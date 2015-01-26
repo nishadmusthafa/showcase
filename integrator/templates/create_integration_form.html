@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row col-sm-8">
 <form class="form-horizontal" id="create_integration_form">
   {% csrf_token %}
   <div class="form-group form-group-sm">
@@ -47,37 +47,8 @@
         <span class="help-block" ></span>
     </div>
   </div>
-  <div class="form-group form-group-sm">
-    <label for="auth_fields" class="col-sm-2 control-label">Auth Fields</label>
-    <div class="col-sm-4">
-        <button class="btn btn-primary btn-sm" type="button" id="add_auth_field">Add Auth Field</button>
-        <div class="row">
-        <ul style="list-style: none;" id="auth_field_list">
-        </ul>
-        </div>
-        <span class="help-block" ></span>
-    </div>
-  </div>
-  <div class="form-group form-group-sm">
-    <label for="auth_validation_endpoint" class="col-sm-2 control-label">Auth Validation URL</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="auth_validation_endpoint" placeholder="Auth Validation URL">
-      <span class="help-block" ></span>
-    </div>
-  </div>
-  <div class="form-group form-group-sm">
-    <label for="contact_synchronization_endpoint" class="col-sm-2 control-label">Contact Sync URL</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="contact_synchronization_endpoint" placeholder="Contact Sync URL">
-      <span class="help-block" ></span>
-    </div>
-  </div>
-  <div class="form-group form-group-sm">
-    <label for="interaction_retrieval_endpoint" class="col-sm-2 control-label">Interaction Retrieval URL</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="interaction_retrieval_endpoint" placeholder="Interaction Retrieval URL">
-      <span class="help-block" ></span>
-    </div>
+  <div class="form-group form-group-sm" id="auth_field_list">
+
   </div>
   <div class="form-group form-group-sm">
     <div class="col-sm-offset-2 col-sm-10">
@@ -107,7 +78,7 @@
                    <label for="source" class="col-sm-2 control-label">Source</label>
                     <div class="col-sm-4">
                         <select class="form-control" id="source">
-                          <option value="input">Input</option>
+                          <option class="default" value="input">Input</option>
                           <option value="default">Default</option>
                           <option value="auth_validation">Auth Validation</option>
                         </select>
@@ -117,7 +88,7 @@
                    <label for="field_type" class="col-sm-2 control-label">Field Type</label>
                     <div class="col-sm-4">
                         <select class="form-control" id="field_type">
-                          <option value="input">Input</option>
+                          <option class="default" value="input">Input</option>
                           <option value="oauth">OAuth</option>
                         </select>
                     </div>
@@ -163,7 +134,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" id="auth_field_save_cancel" data-dismiss="modal">Cancel</button>
-        <button type="button" id="auth_field_form_submit" class="btn btn-primary">Save Auth Field</button>
+        <button type="button" id="auth_field_form_submit" class="btn btn-primary submit-modal-input">Save Auth Field</button>
       </div>
     </div>
   </div>

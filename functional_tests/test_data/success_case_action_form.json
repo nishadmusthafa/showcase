@@ -1,0 +1,9 @@
+{
+    "name": "create_ticket",
+    "display_name": "Create Ticket",
+    "description": "Create a ticket when a customer calls about an issue",
+    "http_url": "https://api.helpscout.net/v1/conversations.json",
+    "basic_auth": "%auth.api_key%:X",
+    "http_request_params": "{\"customer\": {\"id\": %meta.customer_external_id%},\"subject\": %data.subject%,\"mailbox\": {\"id\": %data.mailbox%},\"threads\": [{\"type\": \"customer\",\"createdBy\": {\"id\": %meta.customer_external_id%,\"type\": \"customer\"},\"body\": %data.conversation_body%}]}",
+    "success_response": "201"
+}

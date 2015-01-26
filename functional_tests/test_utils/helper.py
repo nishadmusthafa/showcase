@@ -19,6 +19,10 @@ class UITestCase(LiveServerTestCase):
         input_element = self.browser.find_element_by_id(element_name)
         input_element.send_keys(text)
 
+    def key_in_input_by_css_selector(self, selector_string, text):
+        input_element = self.browser.find_elements_by_css_selector(selector_string)[0]
+        input_element.send_keys(text)
+
     def make_selection(self, element_name, selection_text):
         select_element = Select(self.browser.find_element_by_id(element_name))
         select_element.select_by_visible_text(selection_text)
@@ -42,3 +46,32 @@ class UITestCase(LiveServerTestCase):
             wait.until(EC.element_to_be_clickable((By.ID, element)))
         finally:
             pass
+
+    def find_form_group(self, id):
+        element = self.browser.find_element_by_id(id)
+        while 'form-group' not in element.get_attribute('class'):
+            element = self.get_parent_element(element)
+        return element
+
+    def find_help_block(self, id):
+        form_group = self.find_form_group(id)
+        return form_group.find_elements_by_css_selector('.help-block')[0]
+
+    def assert_form_error_for_field(self, id, message):
+        help_block = self.find_help_block(id)
+        self.assertEquals(help_block.text, message)
+        form_group = self.find_form_group(id)
+        self.assertIn('has-error', form_group.get_attribute('class'))
+
+    def assert_url_validation_error_for_field(self, id):
+        self.assert_form_error_for_field(id, "Please key in a valid url")
+
+    def assert_form_error_for_mandatory_field(self, id):
+        self.assert_form_error_for_field(id, id + " is mandatory")
+
+    def assert_form_is_free_of_errors(self, form):
+        form = self.browser.find_element_by_id(form)
+        form_groups = form.find_elements_by_css_selector('.form-group')
+
+        for form_group in form_groups:
+            self.assertNotIn('has-error', form_group.get_attribute('class'))

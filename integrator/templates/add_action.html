@@ -1,0 +1,144 @@
+<div class="row">
+
+<form class="form-horizontal" id="add_action_form">
+  {% csrf_token %}
+  <div class="form-group form-group-sm">
+    <label for="name" class="col-sm-2 control-label">Name</label>
+    <div   class="col-sm-10">
+      <input type="text" class="form-control" id="name" placeholder="Name" >
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm">
+    <label for="display" class="col-sm-2 control-label">Display Name</label>
+    <div   class="col-sm-10">
+      <input type="text" class="form-control" id="display" placeholder="Display Name">
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="description" class="col-sm-2 control-label">Description</label>
+    <div   class="col-sm-10">
+      <textarea class="form-control" rows="3" id="description" placeholder="Description"></textarea>
+      <span class="help-block" ></span>
+    </div>
+  </div>
+  <div class="form-group form-group-sm" id="action_input_params">
+  </div>
+  <div class="form-group form-group-sm">
+  <label for="api_type" class="col-sm-2 control-label">External Service API</label>
+    <div  class="col-sm-10">
+        <select class="form-control" id="api_type">
+          <option value="none">----</option>
+          <option value="rest">REST</option>
+          <option value="soap">SOAP</option>
+          <option value="oauth">OAuth Workflow</option>
+        </select>
+        <span class="help-block" ></span>
+    </div>
+  </div>
+  <div id="rest_api">
+      <div class="form-group form-group-sm">
+      <label for="http_method" class="col-sm-2 control-label">HTTP Method</label>
+        <div  class="col-sm-10">
+            <select class="form-control" id="http_method">
+              <option value="get">GET</option>
+              <option value="post">POST</option>
+            </select>
+            <span class="help-block" ></span>
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
+      <label for="http_url" class="col-sm-2 control-label">HTTP URL</label>
+      <div   class="col-sm-10">
+        <input type="text" class="form-control" id="http_url" placeholder="Eg: http://domain.com/%meta.contact_external_id%/%data.ticket_id%/comment/ . %XYZ% is special syntax to use params sent from talkdesk to bridge">
+        <span class="help-block" ></span>
+        </div>
+      </div>
+       <div class="form-group form-group-sm">
+      <label for="basic_auth" class="col-sm-2 control-label">Basic Auth</label>
+      <div   class="col-sm-10">
+        <input type="text" class="form-control" id="basic_auth" placeholder="Eg: %auth.username%:%auth.password% Leave blank if you do not want to use basic auth. %XYZ% is special syntax to use params sent from talkdesk to bridge">
+        <span class="help-block" ></span>
+        </div>
+      </div>
+      <div class="form-group" >
+        <label for="http_request_params" class="col-sm-2 control-label">Request Params</label>
+        <div   class="col-sm-10">
+          <textarea class="form-control" rows="3" id="http_request_params" placeholder="Enter valid json format for the HTTP Request. %% is special syntax to use params sent from talkdesk to bridge. You would use that in the value field. Eg:  {&quot;subject&quot;: %data.subject% }"></textarea>
+          <span class="help-block" ></span>
+        </div>
+      </div>
+      <div class="form-group form-group-sm">
+      <label for="success_response" class="col-sm-2 control-label">Success Response</label>
+      <div   class="col-sm-10">
+        <input type="text" class="form-control" id="success_response" placeholder="Expected success response code (Anything else is treated as failure)">
+        <span class="help-block" ></span>
+        </div>
+      </div>
+    </div>
+    <div id="soap_api">
+      <div class="form-group form-group-sm">
+          <div   class="col-sm-offset-2 col-sm-10">
+          <label class="control-label">Unfortunately, we do not support SOAP at this moment. Support will be added in a future release</label>
+          </div>
+        </div>
+    </div>
+    <div id="oauth_workflow">
+      <div class="form-group form-group-sm">
+          <div   class="col-sm-offset-2 col-sm-10">
+          <label class="control-label">Unfortunately, we do not support OAuth Workflow at this moment. Support will be added in a future release</label>
+          </div>
+        </div>
+    </div>
+    <div class="form-group form-group-sm">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default" id="add_action">Add Action</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal" id="input_param_modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Input Param</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="input_param_form">
+              <div class="form-group form-group-sm">
+                <label for="key" class="col-sm-2 control-label">Key</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="key" placeholder="Key">
+                  <span class="help-block" ></span>
+                </div>
+              </div>
+              <div class="form-group form-group-sm">
+                <label for="name" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="name" placeholder="Name">
+                  <span class="help-block" ></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input id="mandatory" type="checkbox"> Mandatory
+                    </label>
+                  </div>
+                </div>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="input_param_cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" id="input_param_submit" class="btn btn-primary submit-modal-input">Save Input Param</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

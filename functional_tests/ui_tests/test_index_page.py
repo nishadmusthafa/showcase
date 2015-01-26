@@ -12,7 +12,7 @@ class IndexPageTest(UITestCase):
     def test_display_of_existing_integrations(self):
         integration_data = json.loads(open(self.test_data_directory + 'helpscout_integration_form.json').read())
         integration = Integration(**integration_data)
-        with mock.patch('integrator.views.Integration') as integration_mock:
+        with mock.patch('integrator.views.ui.integration.views.Integration') as integration_mock:
             integration_mock.objects.all = mock.Mock()
             conf = {'return_value': [integration]}
             integration_mock.objects.all.configure_mock(**conf)
