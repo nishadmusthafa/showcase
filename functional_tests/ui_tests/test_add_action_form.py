@@ -4,7 +4,9 @@ from integrator.views.ui.action.views import Action, Integration
 import json
 import mock
 from mongoengine.errors import NotUniqueError
+import logging
 
+logging.disable(logging.CRITICAL)
 
 class ActionFormTest(UITestCase):
     def json_to_input_param_form(self, data_file_path):

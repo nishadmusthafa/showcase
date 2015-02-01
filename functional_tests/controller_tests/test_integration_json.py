@@ -5,6 +5,10 @@ from integrator.models import AuthenticationField, Integration
 import json
 import mock
 
+import logging
+
+logging.disable(logging.CRITICAL)
+
 class IntegrationJSONTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -44,12 +48,13 @@ class IntegrationJSONTest(TestCase):
             self.assertEquals(response[key], integration_data[key])
 
         self.assertEquals(response["contact_synchronization_endpoint"],
-                          "http://talkdesk-integrator.com/integrations/helpscout/contact_sync")
+                          "http://talkdesk-integrator.com/integrations/helpscout/contact_sync/")
         self.assertEquals(response["auth_validation_endpoint"],
-                          "http://talkdesk-integrator.com/integrations/helpscout/auth_validation")
+                          "http://talkdesk-integrator.com/integrations/helpscout/auth_validation/")
         self.assertEquals(response["interaction_retrieval_endpoint"],
-                          "http://talkdesk-integrator.com/integrations/helpscout/interaction_retrieval")
-
+                          "http://talkdesk-integrator.com/integrations/helpscout/interaction_retrieval/")
+        self.assertEquals(response["agent_synchronization_endpoint"],
+                          "http://talkdesk-integrator.com/integrations/helpscout/agent_sync/")
 
 
 

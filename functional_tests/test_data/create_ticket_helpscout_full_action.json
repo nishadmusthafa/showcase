@@ -1,0 +1,31 @@
+{
+    "name": "create_ticket",
+    "provider": "helpscout",
+    "display": "Create Ticket",
+    "description": "Create a ticket from your call in helpscout when the customer reports an issue",
+    "inputs": [
+        {
+            "key": "mailbox_id",
+            "name": "Mailbox id",
+            "mandatory": true
+        },
+        {
+            "key": "body",
+            "name": "Body",
+            "mandatory": true
+        },
+        {
+            "key": "subject",
+            "name": "Subject",
+            "mandatory": true
+        }
+    ],
+    "external_request": {
+        "success_response": "201",
+        "http_method": "post",
+        "type": "rest",
+        "http_url": "https://api.helpscout.net/v1/conversations.json",
+        "basic_auth": "%auth.api_key%:X",
+        "request_params": "{\n    \"customer\": {\n        \"id\": %meta.contact_external_id%\n    },\n    \"subject\": %data.subject%,\n    \"mailbox\": {\n        \"id\": %data.mailbox%\n    },\n     \"threads\": [\n        {\n            \"type\": \"customer\",\n            \"createdBy\": {\n                \"id\": %meta.contact_external_id%,\n                \"type\": \"customer\"\n            },\n            \"body\": %data.body%\n            }\n    ]\n}"
+    }
+}

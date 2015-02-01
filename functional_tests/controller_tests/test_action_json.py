@@ -5,6 +5,10 @@ from integrator.models import ActionInputParam, Action
 import json
 import mock
 
+import logging
+
+logging.disable(logging.CRITICAL)
+
 class ActionJSONTest(TestCase):
     def setUp(self):
         self.client = Client()
@@ -35,7 +39,7 @@ class ActionJSONTest(TestCase):
             self.assertIn(input_data, [subject_data, body_data])
 
         self.assertEquals(response["endpoint"],
-                          "http://talkdesk-integrator.com/integrations/helpscout/actions/create_ticket")
+                          "http://talkdesk-integrator.com/integrations/helpscout/actions/create_ticket/")
 
         for key in action_data.keys():
             self.assertEquals(response[key], action_data[key])

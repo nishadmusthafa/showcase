@@ -4,6 +4,10 @@ from selenium.common.exceptions import NoSuchElementException
 import contextlib
 import json
 import mock
+import logging
+
+logging.disable(logging.CRITICAL)
+
 
 class IntegrationDetailPageTest(UITestCase):
     def reach_integration_detail_page(self, integration_data_file, integration_name):

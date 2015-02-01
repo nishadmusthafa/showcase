@@ -1,6 +1,6 @@
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-from helper import translate_special_syntax
+from syntax import SpecialSyntaxTranslator
 from models import AUTH_CHOICES, AUTH_SOURCE_CHOICES, FIELD_TYPE_CHOICES
 import json
 import string
@@ -93,11 +93,22 @@ def rest_request_validator(external_request):
         valid = False
         errors['http_method'] = 'Please use GET or POST'
 
-    context = {"*": "generic_string1234"}
-    http_url = translate_special_syntax(http_url, context)
-    basic_auth = translate_special_syntax(basic_auth, context)
-    context = {"*": "\"generic_string1234\""}
-    request_params = translate_special_syntax(request_params, context)
+    unflat_context = {"*": "generic_string1234"}
+    translator = SpecialSyntaxTranslator()
+    translator.build_context(unflat_context)
+
+    translator.set_input(http_url)
+    translator.translate_special_syntax()
+    http_url = translator.output
+
+    translator.set_input(basic_auth)
+    translator.translate_special_syntax()
+    basic_auth = translator.output
+
+    translator.set_input(request_params)
+    translator.enquote_strings()
+    translator.translate_special_syntax()
+    request_params = translator.output
 
     validate = URLValidator()
     try:

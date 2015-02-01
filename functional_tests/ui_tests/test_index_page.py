@@ -2,6 +2,9 @@ from functional_tests.test_utils.helper import UITestCase
 from integrator.models import Integration
 import json
 import mock
+import logging
+
+logging.disable(logging.CRITICAL)
 
 class IndexPageTest(UITestCase):
     def test_create_integration_button_rendering(self):

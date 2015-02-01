@@ -5,6 +5,9 @@ import json
 import mock
 from mongoengine.errors import NotUniqueError
 
+import logging
+
+logging.disable(logging.CRITICAL)
 
 class IntegrationFormTest(UITestCase):
     def json_to_auth_form(self, data_file_path):
