@@ -55,4 +55,9 @@ Here is the set of sub tasks this project has been divided into. Progress is bei
 - [x] UI to add Integration Configuration
 - [x] Link to the Json need to be given to TalkDesk for adding Integration
 - [x] UI to add Actions
-- [ ] Adding endpoints to make integrations work
+- [X] Adding endpoints to make integrations work
+
+### Limitations and further scope
+At this point, here are some things that can be improved and will be taken up at a later point in time
+- Using gevent in the Bridge classes to prevent blocking
+- Adding UI for configuring agent sync, interactions, contact sync and auth validation. Right now, these are hardcoded for helpscout and there is no way to do this for any Integration
